@@ -119,6 +119,7 @@ export class UiVirtualScrollRangeLoaderDirective implements OnInit, OnDestroy {
     ngOnInit() {
         this._viewport.renderedRangeStream
             .pipe(
+                map(range => range.start === 0 && range.end === 0 ? ({ ...range, start: 0, end: 5 }) : range),
                 withLatestFrom(
                     this._cdkVirtualForOf.dataStream.pipe(
                         startWith([] as VirtualScrollItem[]),
